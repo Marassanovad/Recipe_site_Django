@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Registration {% endblock %}
+{% block content %}
+    <div class="form">
+        <h1>{{ message }}</h1>
+        <!-- <form enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            <input type="submit" value="Register">
+        </form> -->
+        <form class="input_data" method="post" enctype="multipart/form-data">
+            {{ user_form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <p><input type="submit" class="button form_button subscribe_button" value="Register"></p>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Recipes {% endblock %}
+{% block content %}
+        <div class="recipes_block main_block">
+            <h2 class="recipe_main_block_text">Рецепт №{{ Recipes.id }}</h2>
+            {% if Recipes.id != none %}
+                <a href="{% url 'edit_recipe' Recipes.id  %}" class="title nav_menu_main_link account">Edit recipe</a>
+            {% endif %}
+            <div class="recipe_item ">
+                <div class="main_detail">
+                    <div class="recipe_img one">
+                        {% if Recipes.image.url != none %}
+                            <img src="{{ Recipes.image.url }}" alt="recipe_img" class="recipe_img">
+                        {% else %}
+                            <h3 class="title">NOT FOUND IMAGE</h3>
+                        {% endif %}
+                    </div>
+                    <div class="recipe_content_text main_detail_text">
+                        <h1 class="title item_title recipe_text name">Название: {{ Recipes.title }}</h1>
+                        <h2 class="title item_title recipe_text categories">Категория: {{ Recipes.categories }}</h2>
+                        <p class="text item_text recipe_text cooking_time">Время приготовления: {{ Recipes.cooking_time }}</p>
+                        <p class="text item_text recipe_text description">Описание: {{ Recipes.description }}</p>
+                        <p class="text item_text recipe_text date">Дата добавления: {{ Recipes.date }}</p>
+                    </div>
+                    <div class="more_detail">
+                        <p class="text item_text recipe_text">Продукты: {{ Recipes.products }}</p>
+                        <p class="text item_text recipe_text cooking_steps">Шаги приготовления: {{ Recipes.cooking_steps }}</p>
+                        <p class="text item_text recipe_text">Автор: {{ Recipes.customer }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

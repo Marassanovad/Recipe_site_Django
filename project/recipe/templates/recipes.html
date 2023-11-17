@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Recipes {% endblock %}
+{% block content %}
+    {% if Recipes.count > 0 %}
+        <div class="recipes_block">
+            <h2 class="title recipe_title">Рецепты</h2>
+            {% for recipe in Recipes %}
+            <div class="recipe_item">
+                <a href="{% url 'recipe' recipe.id  %}" class="recipe_url">
+                    <div class="recipe_img">
+                        {% if recipe.image.url != none %}
+                            <img src="{{ recipe.image.url }}" alt="recipe_img" class="recipe_img">
+                        {% else %}
+                            <h3 class="title">NOT FOUND IMAGE</h3>
+                        {% endif %}
+                    </div>
+                    <div class="recipe_content_text">
+                        <p class="text item_text recipe_text">Title: {{ recipe.title }}</p>
+                        <p class="text item_text recipe_text categories">Categories: {{ recipe.categories }}</p>
+                        <p class="text item_text recipe_text cooking_time">Cooking time: {{ recipe.cooking_time }}</p>
+                        <!-- <p class="text item_text recipe_text date">recipe.date</p> -->
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="recipes_block">
+            <h2>Рецептов нет в базе </h2>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block title %} Account {% endblock %}
+{% block content %}
+<!--        <h1>Log-in</h1>-->
+        <div class="form">
+            {% if form.errors %}
+                <p>
+                    Введите правильные данные
+                    Повторите попытку
+                </p>
+            {% else %}
+                <h1 class="title">{{ message }}</h1>
+            {% endif %}
+                <form class="input_data" action="{% url 'add_recipe' %}" method="post">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                    <p><input type="submit" class="button form_button subscribe_button" value={{ button }}></p>
+                </form>
+    </div>
+{% endblock %}
