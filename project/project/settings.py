@@ -22,13 +22,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-kxnes33#kpzi8x%*tm&oe5ax+y3yfb3#kts8r=lwwng@k#i3tu"
+SECRET_KEY = os.getenv('SECRET_KEY')
+# SECRET_KEY = "django-insecure-kxnes33#kpzi8x%*tm&oe5ax+y3yfb3#kts8r=lwwng@k#i3tu"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'marassanovad.pythonanywhere.com',
+]
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 # Application definition
 
@@ -40,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "recipe",
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +59,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = "project.urls"
@@ -80,9 +90,19 @@ WSGI_APPLICATION = "project.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        # "NAME": BASE_DIR / "db.sqlite3",
+        'NAME': '<marassanovad>$<marassanovad$default>',
+        'USER': '<marassanovad>',
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': '<marassanovad.mysql.pythonanywhere-services.com>',
+        'OPTIONS': {'init_command': "SET NAMES 'utf8mb4';SET sql_mode='STRICT_TRANS_TABLES'", 'charset': 'utf8mb4', },
     }
 }
 
@@ -123,6 +143,7 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 
+STATIC_ROOT = BASE_DIR / 'static/'
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
    (os.path.join(BASE_DIR, "static")),
@@ -137,32 +158,3 @@ LOGIN_REDIRECT_URL = reverse_lazy('account')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#         },
-#         'file': {
-#             'class': 'logging.FileHandler',
-#             'filename': './logs/django.log',
-#         },
-#         'file1': {
-#             'class': 'logging.FileHandler',
-#             'filename': './logs/lesson1.log',
-#         },
-#     },
-#
-#     'loggers': {
-#         'django': {
-#             'handlers': ['console', 'file'],
-#             'level': 'INFO',
-#         },
-#         'lesson1': {
-#             'handlers': ['console', 'file1'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#     },
-# }
