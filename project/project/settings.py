@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import pymysql
+pymysql.install_as_MySQLdb()
 
 from django.urls import reverse_lazy
 
@@ -31,8 +33,9 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'marassanovad.pythonanywhere.com',
+    # '127.0.0.1',
+    # 'marassanovad.pythonanywhere.com',
+     '*',
 ]
 INTERNAL_IPS = [
     '127.0.0.1',
@@ -143,11 +146,13 @@ USE_TZ = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 
-STATIC_ROOT = BASE_DIR / 'static/'
+# STATIC_ROOT = BASE_DIR / 'static/'
 STATIC_URL = "static/"
-STATICFILES_DIRS = [
-   (os.path.join(BASE_DIR, "static")),
-]
+# STATICFILES_DIRS = [
+#    (os.path.join(BASE_DIR, "static")),
+# ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
